@@ -6,17 +6,16 @@ from tqdm import tqdm
 from utils import create_directory_if_not_exists
 
 CODENET_URL = "https://dax-cdn.cdn.appdomain.cloud/dax-project-codenet/1.0.0/Project_CodeNet.tar.gz"
-DATASET_PATH = "./dataset"
 
-def download_and_preprocess_data():
-    create_directory_if_not_exists(DATASET_PATH)
+def download_and_preprocess_data(dataset_path="./dataset"):
+    create_directory_if_not_exists(dataset_path)
     
     # Download the dataset
     print("Downloading Project CodeNet dataset...")
     response = requests.get(CODENET_URL, stream=True)
     total_size = int(response.headers.get('content-length', 0))
     
-    with open(f"{DATASET_PATH}/Project_CodeNet.tar.gz", "wb") as file, tqdm(
+    with open(f"{dataset_path}/Project_CodeNet.tar.gz", "wb") as file, tqdm(
         desc="Downloading",
         total=total_size,
         unit='iB',
@@ -29,11 +28,11 @@ def download_and_preprocess_data():
     
     # Extract the dataset
     print("Extracting the dataset...")
-    os.system(f"tar -xzf {DATASET_PATH}/Project_CodeNet.tar.gz -C {DATASET_PATH}")
+    os.system(f"tar -xzf {dataset_path}/Project_CodeNet.tar.gz -C {dataset_path}")
     
     # Process C++ files
     cpp_files = []
-    for root, dirs, files in os.walk(f"{DATASET_PATH}/Project_CodeNet"):
+    for root, dirs, files in os.walk(f"{dataset_path}/Project_CodeNet"):
         for file in files:
             if file.endswith(".cpp"):
                 cpp_files.append(os.path.join(root, file))
@@ -52,7 +51,7 @@ def download_and_preprocess_data():
     df = pd.DataFrame(preprocessed_data)
     
     # Save preprocessed data
-    df.to_csv(f"{DATASET_PATH}/preprocessed_cpp_data.csv", index=False)
+    df.to_csv(f"{dataset_path}/preprocessed_cpp_data.csv", index=False)
     
     print(f"Preprocessed {len(df)} C++ files.")
     return df

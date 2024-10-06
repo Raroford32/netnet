@@ -4,11 +4,6 @@ from transformers import AdamW, get_linear_schedule_with_warmup
 from tqdm import tqdm
 from utils import create_directory_if_not_exists
 
-FINE_TUNED_MODEL_PATH = "./fine_tuned_model"
-BATCH_SIZE = 4
-EPOCHS = 3
-LEARNING_RATE = 5e-5
-
 class CodeDataset(Dataset):
     def __init__(self, dataframe, tokenizer, max_length=512):
         self.data = dataframe
@@ -34,20 +29,20 @@ class CodeDataset(Dataset):
             'attention_mask': torch.tensor(inputs['attention_mask'], dtype=torch.long)
         }
 
-def fine_tune_model(model, tokenizer, data):
+def fine_tune_model(model, tokenizer, data, learning_rate=5e-5, batch_size=4, epochs=3, output_path="./fine_tuned_model"):
     dataset = CodeDataset(data, tokenizer)
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
-    optimizer = AdamW(model.parameters(), lr=LEARNING_RATE)
-    total_steps = len(dataloader) * EPOCHS
+    optimizer = AdamW(model.parameters(), lr=learning_rate)
+    total_steps = len(dataloader) * epochs
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=0, num_training_steps=total_steps)
 
     model.train()
-    for epoch in range(EPOCHS):
-        print(f"Epoch {epoch + 1}/{EPOCHS}")
+    for epoch in range(epochs):
+        print(f"Epoch {epoch + 1}/{epochs}")
         for batch in tqdm(dataloader, desc="Training"):
             input_ids = batch['input_ids'].to(device)
             attention_mask = batch['attention_mask'].to(device)
@@ -61,11 +56,11 @@ def fine_tune_model(model, tokenizer, data):
             optimizer.zero_grad()
 
     # Save the fine-tuned model
-    create_directory_if_not_exists(FINE_TUNED_MODEL_PATH)
-    model.save_pretrained(FINE_TUNED_MODEL_PATH)
-    tokenizer.save_pretrained(FINE_TUNED_MODEL_PATH)
+    create_directory_if_not_exists(output_path)
+    model.save_pretrained(output_path)
+    tokenizer.save_pretrained(output_path)
 
-    print(f"Fine-tuned model saved to {FINE_TUNED_MODEL_PATH}")
+    print(f"Fine-tuned model saved to {output_path}")
     return model
 
 if __name__ == "__main__":

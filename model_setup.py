@@ -1,14 +1,9 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-MODEL_NAME = "microsoft/CodeGPT-small-cpp"
-FINE_TUNED_MODEL_PATH = "./fine_tuned_model"
-
-def setup_model(load_fine_tuned=False):
+def setup_model(model_path="microsoft/CodeGPT-small-cpp", load_fine_tuned=False):
     if load_fine_tuned:
-        model_path = FINE_TUNED_MODEL_PATH
-    else:
-        model_path = MODEL_NAME
+        model_path = "./fine_tuned_model"
 
     print(f"Loading model from: {model_path}")
     tokenizer = AutoTokenizer.from_pretrained(model_path)
