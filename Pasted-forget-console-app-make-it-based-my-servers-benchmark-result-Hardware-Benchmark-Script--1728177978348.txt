@@ -1,0 +1,112 @@
+forget console app
+
+
+make it based my servers benchmark result 
+
+=== Hardware Benchmark Script ===
+
+Number of GPUs detected: 8
+  GPU 0: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 1: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 2: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 3: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 4: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 5: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 6: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+  GPU 7: NVIDIA A100-SXM4-80GB | Memory: 79.14 GB
+
+Benchmarking GPU Compute Performance on Device 0...
+Matrix Size: 1024x1024 | Time: 0.0160s | Throughput: 13391.41 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1182s | Throughput: 14531.49 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7246s | Throughput: 18967.98 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7765s | Throughput: 19034.20 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 0...
+Memory Bandwidth: 1097.88 GB/s
+
+Benchmarking GPU Compute Performance on Device 1...
+Matrix Size: 1024x1024 | Time: 0.0159s | Throughput: 13531.23 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1182s | Throughput: 14532.22 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7221s | Throughput: 19033.16 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7380s | Throughput: 19161.80 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 1...
+Memory Bandwidth: 1095.30 GB/s
+
+Benchmarking GPU Compute Performance on Device 2...
+Matrix Size: 1024x1024 | Time: 0.0159s | Throughput: 13533.87 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1096s | Throughput: 15678.12 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7274s | Throughput: 18895.71 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7855s | Throughput: 19004.64 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 2...
+Memory Bandwidth: 1097.02 GB/s
+
+Benchmarking GPU Compute Performance on Device 3...
+Matrix Size: 1024x1024 | Time: 0.0159s | Throughput: 13475.96 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1112s | Throughput: 15445.97 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7224s | Throughput: 19025.96 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7394s | Throughput: 19157.14 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 3...
+Memory Bandwidth: 1093.37 GB/s
+
+Benchmarking GPU Compute Performance on Device 4...
+Matrix Size: 1024x1024 | Time: 0.0159s | Throughput: 13504.86 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1182s | Throughput: 14540.49 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7274s | Throughput: 18893.61 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7354s | Throughput: 19170.76 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 4...
+Memory Bandwidth: 1095.23 GB/s
+
+Benchmarking GPU Compute Performance on Device 5...
+Matrix Size: 1024x1024 | Time: 0.0160s | Throughput: 13407.36 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1182s | Throughput: 14533.28 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7299s | Throughput: 18829.12 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7901s | Throughput: 18989.39 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 5...
+Memory Bandwidth: 1095.51 GB/s
+
+Benchmarking GPU Compute Performance on Device 6...
+Matrix Size: 1024x1024 | Time: 0.0158s | Throughput: 13552.20 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1104s | Throughput: 15555.97 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7235s | Throughput: 18996.72 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7662s | Throughput: 19068.28 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 6...
+Memory Bandwidth: 1095.98 GB/s
+
+Benchmarking GPU Compute Performance on Device 7...
+Matrix Size: 1024x1024 | Time: 0.0161s | Throughput: 13379.68 GFLOPS
+Matrix Size: 2048x2048 | Time: 0.1154s | Throughput: 14881.26 GFLOPS
+Matrix Size: 4096x4096 | Time: 0.7220s | Throughput: 19036.87 GFLOPS
+Matrix Size: 8192x8192 | Time: 5.7300s | Throughput: 19188.73 GFLOPS
+
+Benchmarking GPU Memory Bandwidth on Device 7...
+Memory Bandwidth: 1093.87 GB/s
+
+Benchmarking CPU Performance...
+  Number of Physical Cores: 240
+  CPU GFLOPS (estimated): 1287.53 GFLOPS
+
+Benchmarking Disk I/O on Path: /home/ubuntu...
+  Write Test:
+    Write Speed: 859.92 MB/s
+  Read Test:
+    Read Speed: 10582.02 MB/s
+
+Benchmarking Network Performance with iperf3...
+  iperf3 is not installed or not found in PATH. Skipping network benchmark.
+
+
+
+
+
+
+
+
+and my modeles files  path on my serve /home/ubuntu/mlabonne_Hermes-3-Llama-3.1-70B-lorablated
+
+do it to be as 1 click script for automation all process and provide a c++ finetuned modeles files in a new folder that able generate comlex and comlicated codes in c++

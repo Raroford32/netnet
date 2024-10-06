@@ -1,58 +1,45 @@
 import argparse
+import os
 from data_processor import download_and_preprocess_data
 from model_setup import setup_model
 from fine_tuning import fine_tune_model
 from evaluation import evaluate_model
 from code_generator import generate_code
 
-def get_user_input(prompt, default_value):
-    user_input = input(f"{prompt} (default: {default_value}): ").strip()
-    return user_input if user_input else default_value
-
 def main():
     parser = argparse.ArgumentParser(description="C++ Code Generation LLM Fine-Tuning Pipeline")
-    parser.add_argument("--action", choices=["train", "generate"], required=True, help="Action to perform")
+    parser.add_argument("--action", choices=["train", "generate"], default="train", help="Action to perform")
     parser.add_argument("--prompt", type=str, help="Prompt for code generation")
+    parser.add_argument("--model_path", type=str, default="/home/ubuntu/mlabonne_Hermes-3-Llama-3.1-70B-lorablated", help="Path to the pre-trained model")
+    parser.add_argument("--dataset_path", type=str, default="./dataset", help="Path to save/load the dataset")
+    parser.add_argument("--output_path", type=str, default="./finetuned_cpp_model", help="Path to save the fine-tuned model")
+    parser.add_argument("--learning_rate", type=float, default=1e-5, help="Learning rate for fine-tuning")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size for training")
+    parser.add_argument("--epochs", type=int, default=3, help="Number of epochs for training")
     args = parser.parse_args()
 
     if args.action == "train":
-        print("Welcome to the C++ Code Generation LLM Fine-Tuning Pipeline!")
-        print("Please provide the following inputs (press Enter to use default values):")
+        print("Starting the automated C++ Code Generation LLM Fine-Tuning Pipeline...")
 
-        model_path = get_user_input("Model path", "microsoft/CodeGPT-small-cpp")
-        dataset_path = get_user_input("Dataset path", "./dataset")
-        learning_rate = float(get_user_input("Learning rate", "5e-5"))
-        batch_size = int(get_user_input("Batch size", "4"))
-        num_epochs = int(get_user_input("Number of epochs", "3"))
-        output_path = get_user_input("Output path for the fine-tuned model", "./fine_tuned_model")
+        print("Step 1: Downloading and preprocessing data...")
+        data = download_and_preprocess_data(args.dataset_path)
 
-        print("\nStarting the automated process...")
+        print("Step 2: Setting up the model...")
+        model, tokenizer = setup_model(args.model_path)
 
-        print("Downloading and preprocessing data...")
-        data = download_and_preprocess_data(dataset_path)
+        print("Step 3: Fine-tuning the model...")
+        fine_tuned_model = fine_tune_model(model, tokenizer, data, args.learning_rate, args.batch_size, args.epochs, args.output_path)
 
-        print("Setting up the model...")
-        model, tokenizer = setup_model(model_path)
-
-        print("Fine-tuning the model...")
-        fine_tuned_model = fine_tune_model(model, tokenizer, data, learning_rate, batch_size, num_epochs, output_path)
-
-        print("Evaluating the model...")
+        print("Step 4: Evaluating the model...")
         evaluate_model(fine_tuned_model, tokenizer, data)
 
         print("Training complete!")
 
-        while True:
-            generate_option = input("Do you want to generate C++ code using the fine-tuned model? (y/n): ").strip().lower()
-            if generate_option == 'y':
-                prompt = input("Enter a prompt for code generation: ")
-                generated_code = generate_code(fine_tuned_model, tokenizer, prompt)
-                print("Generated C++ code:")
-                print(generated_code)
-            elif generate_option == 'n':
-                break
-            else:
-                print("Invalid input. Please enter 'y' or 'n'.")
+        print("Generating a sample C++ code...")
+        sample_prompt = "Write a C++ function to implement a binary search tree"
+        generated_code = generate_code(fine_tuned_model, tokenizer, sample_prompt)
+        print("Generated C++ code:")
+        print(generated_code)
 
     elif args.action == "generate":
         if not args.prompt:

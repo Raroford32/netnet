@@ -1,19 +1,21 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
-def setup_model(model_path="microsoft/CodeGPT-small-cpp", load_fine_tuned=False):
+def setup_model(model_path="/home/ubuntu/mlabonne_Hermes-3-Llama-3.1-70B-lorablated", load_fine_tuned=False):
     if load_fine_tuned:
-        model_path = "./fine_tuned_model"
+        model_path = "./finetuned_cpp_model"
 
     print(f"Loading model from: {model_path}")
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     model = AutoModelForCausalLM.from_pretrained(model_path)
 
     # Move model to GPU if available
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
+    if torch.cuda.is_available():
+        model = model.to('cuda')
+        print(f"Model loaded on GPU")
+    else:
+        print(f"Model loaded on CPU")
 
-    print(f"Model loaded on device: {device}")
     return model, tokenizer
 
 if __name__ == "__main__":
